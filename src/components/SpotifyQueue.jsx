@@ -10,7 +10,7 @@ class SpotifyQueue extends Component {
             <div className="songGrid">
               <div className="songName">Raining Blood</div>
               <div className="songArtist">Slayer</div>
-              <div className="vote">Upvoted by: 7</div>
+              <div className="vote">Upvoted by:7</div>
               <div className="queuedBy">Suggested by: Peter Locher</div>
             </div>
           </li>
