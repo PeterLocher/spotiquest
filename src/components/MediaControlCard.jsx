@@ -4,11 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+import ProgressBar from './ProgressBar';
 
 const styles = theme => ({
   card: {
@@ -26,9 +23,7 @@ const styles = theme => ({
   },
   controls: {
     display: 'flex',
-    alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    margin: '0px 10px 10px 10px'
   },
   playIcon: {
     height: 38,
@@ -51,15 +46,7 @@ function MediaControlCard(props) {
           </Typography>
         </CardContent>
         <div className={classes.controls}>
-          <IconButton aria-label="Previous">
-            {theme.direction === 'rtl' ? <SkipNextIcon /> : <SkipPreviousIcon />}
-          </IconButton>
-          <IconButton aria-label="Play/pause">
-            <PlayArrowIcon className={classes.playIcon} />
-          </IconButton>
-          <IconButton aria-label="Next">
-            {theme.direction === 'rtl' ? <SkipPreviousIcon /> : <SkipNextIcon />}
-          </IconButton>
+          <ProgressBar />
         </div>
       </div>
       <CardMedia

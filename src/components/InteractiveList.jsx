@@ -9,8 +9,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
-//import DeleteIcon from "@material-ui/icons/Delete";
-import SvgIcon from "@material-ui/icons/Delete";
 //import priorityQueue from ''
 
 const styles = theme => ({
@@ -36,20 +34,23 @@ class InteractiveList extends React.Component {
             className={this.props.classes.avatar}
           />
         </ListItemAvatar>
-        <ListItemText
-          primary={s.element}
-          secondary="Slayer"
-        />
+        <ListItemText primary={s.element} secondary="Slayer" />
         <ListItemSecondaryAction>
           <IconButton aria-label="Upvote">
-            <SvgIcon>
-              <path d="./../pictures/baseline-thumb_up-24px.svg" />
-            </SvgIcon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path fill="none" d="M0 0h24v24H0V0z" />
+              <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
+            </svg>
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
     ));
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -58,9 +59,7 @@ class InteractiveList extends React.Component {
       <div className={classes.root}>
         <Grid>
           <div className={classes.demo}>
-            <List dense={true}>
-              {this.generateSongs()}
-            </List>
+            <List dense={true}>{this.generateSongs()}</List>
           </div>
         </Grid>
       </div>
