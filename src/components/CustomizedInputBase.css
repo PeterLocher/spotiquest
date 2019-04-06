@@ -1,0 +1,15 @@
+.root {
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .input {
+    margin-left: 8;
+    flex: 1;
+  }
+
+  .iconButton {
+    padding: 10;
+  }
