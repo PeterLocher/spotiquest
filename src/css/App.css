@@ -1,21 +1,32 @@
+html,
+body,
+#root {
+  background-color:#3d9970;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 .header {
   grid-area: header;
-  border: 1px solid black;
+  text-align: center;
+}
+
+.header > h1 {
+  margin: 0;
+  margin-bottom: 10px;
 }
 
 .playing {
   grid-area: playing;
-  border: 1px solid black;
+  text-align: center;
 }
 
 .search {
   grid-area: search;
-  border: 1px solid black;
 }
 
 .queue {
   grid-area: main;
-  border: 1px solid black;
 }
 
 .footer {
@@ -23,21 +34,23 @@
   border: 1px solid black;
 }
 
+/* The main css for the application */
 .App {
-  margin: auto;
+  margin: 10px auto;
   width: 50%;
   max-width: 450px;
   min-width: 300px;
   border: 3px solid black;
   padding: 15px;
+  border-radius: 10px;
 
   display: grid;
   grid-template-areas:
-  'header header header header header header'
-  'playing playing playing playing playing playing'
-  'search search search search search search'
-  'main main main main main main'
-  'footer footer footer footer footer footer';
-  grid-gap: 10px;
-  background-color: rgb(13, 158, 69);
+    "header header header header header header"
+    "playing playing playing playing playing playing"
+    "search search search search search search"
+    "main main main main main main"
+    "footer footer footer footer footer footer";
+  grid-gap: 5px;
+  background-color: #DDD;
 }
