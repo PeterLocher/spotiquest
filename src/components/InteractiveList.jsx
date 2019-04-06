@@ -38,7 +38,7 @@ class InteractiveList extends React.Component {
           <div className={classes.demo}>
             <List dense={true}>
               {generate(
-                <ListItem className="FuckDig">
+                <ListItem>
                   <ListItemAvatar>
                   <Avatar alt="dummyPhoto" src="https://source.unsplash.com/user/erondu/50x50" className={classes.avatar} />
                   </ListItemAvatar>

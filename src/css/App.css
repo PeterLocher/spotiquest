@@ -1,7 +1,11 @@
 html,
 body,
 #root {
-  background-color:#4a5c48;
+  background: linear-gradient(105deg, 
+  rgba(131,58,180,1) 0%, 
+  rgba(253,29,29,0.7251633929939163) 50%, 
+  rgba(252,176,69,1) 100%);
+
   min-width: 100%;
   min-height: 100%;
 }
