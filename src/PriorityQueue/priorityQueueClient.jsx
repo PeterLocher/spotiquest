@@ -27,7 +27,7 @@ class priorityQueue {
     }
 
     removeFirst() {
-        return this.items.removeFirst;
+        return this.items.shift().element;
     }
 
     getQueue() {

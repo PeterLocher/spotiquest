@@ -5,7 +5,7 @@ var path = require('path');
 var Queue = require( path.resolve( __dirname, './PriorityQueue/priorityQueue.jsx' ) );
 
 var queue = new Queue();
-queue.append("KAGE!");
+queue.append("slayer raining blood");
 
 io.on('connect', (client) => {
     console.log("connection!");
@@ -19,6 +19,12 @@ io.on('connect', (client) => {
         queue.append(song);
 
         console.log("someone added", song);
+    });
+
+    client.on('getNextSong', () => {
+        var toSend = queue.removeFirst();
+        client.emit('nextSong', toSend);
+        console.log("Sent", toSend);
     })
 });
 

@@ -21,7 +21,7 @@ let append = (element) => {
   } else{
       songs.push({element: element, priority: 0});
   }
-}
+};
 
 let boostItem = (element) => {
   let index = songs.map(i => i.element).indexOf(element);
@@ -33,7 +33,7 @@ let boostItem = (element) => {
       songs[index] = tmp;
       index--;
   }
-}
+};
 
 class App extends Component {
   constructor(props) {
@@ -70,7 +70,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("kage", songs)
+    console.log("kage", songs);
     return (
       <React.Fragment>
         <CssBaseline />
