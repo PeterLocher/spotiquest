@@ -35,6 +35,8 @@ let boostItem = (element) => {
   }
 };
 
+var currentPlayData = {name: 'Raining Blood', albumArt: 'spotify:album:5v5BfkxWDAKTkzrXl3H0mU', songLenght: 28000};
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -63,6 +65,11 @@ class App extends Component {
       append(song);
       this.forceUpdate();
     });
+
+    socket.on('newSongToPlay', (data) => {
+        currentPlayData = data;
+        this.forceUpdate();
+    });
   }
 
   sendSong = (song) => {
@@ -77,7 +84,9 @@ class App extends Component {
         <Grid sm>
           <div className="App">
             <div className="playing">
-              <MediaControlCard />
+              <MediaControlCard
+                songData = {currentPlayData}
+              />
             </div>
             <div className="search">
               <CustomizedInputBase
