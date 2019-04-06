@@ -1,12 +1,37 @@
-div.App {
-  margin: auto;
-  width: 50%;
-  border: 3px solid green;
-  padding: 10px;
-  align-content: center;
+.header {
+  grid-area: header;
+  border: 1px solid black;
 }
 
-table {
+.searchBar {
+  grid-area: search;
   border: 1px solid black;
+}
+
+.queue {
+  grid-area: main;
+  border: 1px solid black;
+}
+
+.footer {
+  grid-area: footer;
+  border: 1px solid black;
+}
+
+.App {
+  margin: auto;
+  width: 50%;
+  max-width: 450px;
+  min-width: 300px;
+  border: 3px solid black;
   padding: 15px;
+
+  display: grid;
+  grid-template-areas:
+  'header header header header header header'
+  'search search search search search search'
+  'main main main main main main'
+  'footer footer footer footer footer footer';
+  grid-gap: 10px;
+  background-color: rgb(13, 158, 69);
 }
