@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import CssBaseline from '@material-ui/core/CssBaseline';
+import CssBaseline from "@material-ui/core/CssBaseline";
 // import logo from './logo.svg';
-import SpotifyQueue from "./components/SpotifyQueue";
-import SearchBar from "./components/SearchBar";
-import CurrentlyPlaying from "./components/CurrentlyPlaying";
 import "./css/App.css";
+import InteractiveList from "./components/InteractiveList";
+import CustomizedInputBase from "./components/CustomizedInputBase";
+import Grid from "@material-ui/core/CssBaseline";
+import MediaControlCard from "./components/MediaControlCard";
 
 import io from 'socket.io-client';
 // const socket = io('192.168.43.86:8000');
@@ -30,22 +31,20 @@ class App extends Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <div className="App">
-          <div className="header">
-            <h1>SpotifyQueuer</h1>
+        <Grid sm>
+          <div className="App">
+            <div className="playing">
+              <MediaControlCard />
+            </div>
+            <div className="search">
+              <CustomizedInputBase />
+            </div>
+            <div className="queue">
+              <InteractiveList />
+            </div>
           </div>
-          <div className="playing">
-            <CurrentlyPlaying />
-          </div>
-          <div className="search">
-            <SearchBar />
-          </div>
-          <div className="queue">
-            <SpotifyQueue />
-          </div>
-          <div className="footer">Here is the footer!</div>
-        </div>
-        </React.Fragment>
+        </Grid>
+      </React.Fragment>
     );
   }
 }
