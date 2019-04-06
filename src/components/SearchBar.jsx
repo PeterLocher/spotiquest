@@ -6,12 +6,13 @@ class SearchBar extends Component {
   render() {
     return (
       <div>
-        <form className="form">
+        <form className="form" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
             className="input"
             placeholder="You can search here ..."
           />
+          <button type="submit">Search</button>
         </form>
       </div>
     );
