@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
-import SpotifyQueue from './SpotifyQueue';
+import SpotifyQueue from './components/SpotifyQueue';
+import SearchBar from './components/SearchBar'
 import './App.css';
 
 class App extends Component {
@@ -8,7 +9,8 @@ class App extends Component {
     return (
       <div className="App">
         <div className="header"><h1>The is Spotify! Yeah!</h1></div>
-        <div className="searchBar">Here you can search!</div>
+        <div className="currentlyPlaying"><CurrentlyPlaying /></div>
+        <div className="searchBar"><SearchBar /></div>
         <div className="queue"><SpotifyQueue /></div>
         <div className="footer">Here is the footer!</div>
       </div>
