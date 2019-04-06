@@ -13,10 +13,14 @@ import Grid from "@material-ui/core/Grid";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   demo: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: '0px 0px 5px 5px',
+  },
+  voting: {
+    alignItems: "left"
   }
 });
 
@@ -36,17 +40,17 @@ class InteractiveList extends React.Component {
         </ListItemAvatar>
         <ListItemText primary={s.element} secondary="Slayer" />
         <ListItemSecondaryAction>
-          <IconButton aria-label="Upvote">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path fill="none" d="M0 0h24v24H0V0z" />
-              <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
-            </svg>
-          </IconButton>
+            <IconButton aria-label="Upvote">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path fill="none" d="M0 0h24v24H0V0z" />
+                <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
+              </svg>
+            </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
     ));

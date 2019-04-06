@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -24,10 +22,7 @@ class CustomizedInputBase extends Component {
 
   render() {
     return (
-      <Paper className="root" elevation={1}>
-        {/* <IconButton className={classes.iconButton} aria-label="Menu">
-        <MenuIcon />
-      </IconButton> */}
+      <Paper className="root" elevation={1} square="false">
         <InputBase className="input"
           placeholder="Search Spotify ..."
           value={this.state.inputValue}

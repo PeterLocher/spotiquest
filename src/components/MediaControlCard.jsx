@@ -10,6 +10,7 @@ import ProgressBar from './ProgressBar';
 const styles = theme => ({
   card: {
     display: 'flex',
+    borderRadius: '5px 5px 0px 0px',
   },
   details: {
     display: 'flex',

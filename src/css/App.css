@@ -12,6 +12,7 @@ html, body, #root {
 
 .playing {
   grid-area: playing;
+  border-radius: 5px 5px 0px 0px;
   text-align: center;
   -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
@@ -28,6 +29,7 @@ html, body, #root {
 
 .queue {
   grid-area: main;
+  border-radius: 0px 0px 5px 5px;
   -webkit-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
   box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
@@ -44,9 +46,9 @@ html, body, #root {
 
   display: grid;
   grid-template-areas:
-    "playing playing playing playing playing playing"
-    "search search search search search search"
-    "main main main main main main";
+    "playing"
+    "search"
+    "main";
   grid-gap: 5px;
   background-color: rgba(37, 37, 37, 0.452);
   
