@@ -3,7 +3,12 @@
   border: 1px solid black;
 }
 
-.searchBar {
+.playing {
+  grid-area: playing;
+  border: 1px solid black;
+}
+
+.search {
   grid-area: search;
   border: 1px solid black;
 }
@@ -29,6 +34,7 @@
   display: grid;
   grid-template-areas:
   'header header header header header header'
+  'playing playing playing playing playing playing'
   'search search search search search search'
   'main main main main main main'
   'footer footer footer footer footer footer';
