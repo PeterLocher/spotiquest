@@ -10,15 +10,16 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import DeleteIcon from "@material-ui/icons/Delete";
+import SvgIcon from "@material-ui/icons/Delete";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   demo: {
-    backgroundColor: theme.palette.background.paper,
-  },
-}); 
+    backgroundColor: theme.palette.background.paper
+  }
+});
 
 function generate(element) {
   return [0, 1, 2, 3, 4].map(value =>
@@ -40,15 +41,21 @@ class InteractiveList extends React.Component {
               {generate(
                 <ListItem>
                   <ListItemAvatar>
-                  <Avatar alt="dummyPhoto" src="https://source.unsplash.com/user/erondu/50x50" className={classes.avatar} />
+                    <Avatar
+                      alt="dummyPhoto"
+                      src="https://source.unsplash.com/user/erondu/50x50"
+                      className={classes.avatar}
+                    />
                   </ListItemAvatar>
                   <ListItemText
                     primary="Raining Blood"
                     secondary={true ? "Slayer" : null}
                   />
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Delete">
-                      <DeleteIcon />
+                    <IconButton aria-label="Upvote">
+                      <SvgIcon>
+                        <path d="./../pictures/baseline-thumb_up-24px.svg" />
+                      </SvgIcon>
                     </IconButton>
                   </ListItemSecondaryAction>
                 </ListItem>
