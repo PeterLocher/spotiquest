@@ -1,178 +1,98 @@
-import React, { Component } from 'react';
-import './App.css';
-import SpotifyWebApi from 'spotify-web-api-js';
+import React, { Component } from "react";
+import CssBaseline from "@material-ui/core/CssBaseline";
+// import logo from './logo.svg';
+import "./css/App.css";
+import InteractiveList from "./components/InteractiveList";
+import CustomizedInputBase from "./components/CustomizedInputBase";
+import Grid from "@material-ui/core/CssBaseline";
+import MediaControlCard from "./components/MediaControlCard";
 
-const spotifyApi = new SpotifyWebApi();
+import io from 'socket.io-client';
+// const socket = io('192.168.43.86:8000');
+const socket = io('localhost:8000');
+
+// const Queue = require("./PriorityQueue/priorityQueueClient.jsx");
+// var songs = new Queue.constructor([]);
+var songs = [];
+
+let append = (element) => {
+  if (songs.filter(i => i.element === element).length > 0) {
+      boostItem(element);
+  } else{
+      songs.push({element: element, priority: 0});
+  }
+}
+
+let boostItem = (element) => {
+  let index = songs.map(i => i.element).indexOf(element);
+  songs[index].priority += 1;
+
+  while (index !== 0 && songs[index].priority > songs[index - 1].priority) {
+      let tmp = songs[index - 1];
+      songs[index - 1] = songs[index];
+      songs[index] = tmp;
+      index--;
+  }
+}
 
 class App extends Component {
-
-  constructor(){
-    super();
-    const params = this.getHashParams();
-    const token = params.access_token;
-    if (token) {
-      spotifyApi.setAccessToken(token);
-    }
-    this.state = {
-      loggedIn: token,
-      nowPlaying: { name: 'Not Checked', albumArt: '' },
-      artistQ: "",
-      trackQ: "",
-      albumUri: "spotify:album:5v5BfkxWDAKTkzrXl3H0mU",
-      trackNo: 9,
-      currentTrackLength: 280000,
-      nextTrackLength: 280000
-    }
+  constructor(props) {
+    super(props);
+    console.log("HVAD");
   }
 
-  getNowPlaying(){
-    spotifyApi.getMyCurrentPlaybackState()
-        .then((response) => {
-          if (response.item != null && response.item.name != null) {
-              this.setState({
-                  nowPlaying: {
-                      name: response.item.name,
-                      albumArt: response.item.album.images[0].url
-                  }
-              });
-          }
-        })
+  componentDidMount() {
+    socket.on('connect', () => {
+      console.log("Connected:", socket.connected);
+      //console.log("heh", songs);
+    });
+
+    socket.on('initial setup', (data) => {
+      //console.log("Got stuff!", data);
+      //this.setState({ songs: new Queue.constructor(data) })
+      //songs = new Queue.constructor(data);
+      songs = data;
+      //console.log("I now am!", songs)
+      this.forceUpdate();
+    });
+
+    socket.on('songAdded', (song) => {
+      //console.log(song);
+      //console.log(songs);
+      //songs.append(song);
+      append(song);
+      this.forceUpdate();
+    });
   }
 
-  static playRainingBlood(){
-    spotifyApi.play({
-        device_id: "2a68b1cb66d56c81b1b685d16f0f2d7c094f8c9c",
-        context_uri: "spotify:album:5v5BfkxWDAKTkzrXl3H0mU",
-        offset: {
-            position: 9
-        },
-        position_ms: 32000});
-  }
-
-  playNextTrack(){
-    var albumUri = this.state.albumUri;
-    var trackNo = this.state.trackNo;
-    spotifyApi.play({
-      device_id: "2a68b1cb66d56c81b1b685d16f0f2d7c094f8c9c",
-      context_uri: albumUri,
-      offset: {
-        position: trackNo
-      },
-      position_ms: 0});
-    this.interval = setInterval(() => this.checkPlayNextTrack(), 400);
-    this.setState({currentTrackLength: this.state.nextTrackLength})
-  }
-
-  checkPlayNextTrack(){
-      spotifyApi.getMyCurrentPlaybackState()
-        .then((response) => {
-          var timeLeft = this.state.currentTrackLength - response.progress_ms;
-          console.log(timeLeft);
-          if(timeLeft < 501 && !(timeLeft <= 0)) {
-            console.log("nextSong");
-            clearInterval(this.interval);
-            this.setState({triggerNextTrack: false});
-            this.playNextTrack();
-          }
-        });
-  }
-
-  searchTrack(q){
-      spotifyApi.searchTracks(q, {
-          limit: 1
-      }).then((response) => {
-          var item = response.tracks.items[0];
-          if (item == null) {this.letNextSongBeSlayer();}
-          else {
-              this.setState({
-                  albumUri: item.album.uri,
-                  trackNo: item.track_number - 1,
-                  nextTrackLength: item.duration_ms
-              })
-          }
-      })
-  }
-
-  letNextSongBeSlayer() {
-      spotifyApi.getAlbumTracks("2kwj7NbZ9YMGYYvCNrknoj").then((response) => {
-          var no = Math.floor(Math.random()*12);
-          var item = response.items[no];
-          this.setState({
-              albumUri: "spotify:album:2kwj7NbZ9YMGYYvCNrknoj",
-              trackNo: no,
-              nextTrackLength: item.duration_ms
-          })
-      });
-  }
-
-  getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    e = r.exec(q);
-    while (e) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-      e = r.exec(q);
-    }
-    return hashParams;
+  sendSong = (song) => {
+    socket.emit('addSong', song);
   }
 
   render() {
-    this.getNowPlaying();
-
+    console.log("kage", songs)
     return (
-      <div className='App'>
-        <a href='http://localhost:8888'>
-            Login to Spotify
-        </a>
-
-          <div>
-              Now Playing: {this.state.nowPlaying.name}
+      <React.Fragment>
+        <CssBaseline />
+        <Grid sm>
+          <div className="App">
+            <div className="playing">
+              <MediaControlCard />
+            </div>
+            <div className="search">
+              <CustomizedInputBase
+                songSender = {this.sendSong}
+              />
+            </div>
+            <div className="queue">
+              <InteractiveList
+                songs = {songs}
+              />
+            </div>
           </div>
-
-          <div>
-              <img src={this.state.nowPlaying.albumArt} style={{ height: 150 }}/>
-          </div>
-
-          <div>
-              <text>
-                  Sang_______
-              </text>
-              <input type="text"
-                     onChange={(e) => {
-                         if(e.target.value !== undefined) this.setState({trackQ: e.target.value})
-                     }}
-                     value={this.state.trackQ}>
-              </input>
-          </div>
-
-          <div>
-              <text>
-                  Kunstner___
-              </text>
-              <input type="text"
-                     onChange={(e) => {
-                         if(e.target.value !== undefined) this.setState({artistQ: e.target.value})
-                     }}
-                     value={this.state.artistQ}>
-              </input>
-          </div>
-
-          <div>
-              {this.state.loggedIn &&
-              <button onClick={() => {
-                  this.searchTrack(this.state.artistQ + " " + this.state.trackQ)
-              }}>
-                  Get track
-              </button>}
-
-              { this.state.loggedIn &&
-              <button onClick={() => this.playNextTrack()}>
-                  Play next track
-              </button>}
-          </div>
-      </div>
-    )
+        </Grid>
+      </React.Fragment>
+    );
   }
 }
 
