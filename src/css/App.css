@@ -39,7 +39,7 @@ html, body, #root {
 .App {
   margin: 10px auto;
   width: 50%;
-  max-width: 450px;
+  max-width: 350px;
   min-width: 350px;
   padding: 10px;
   border-radius: 10px;
