@@ -26,6 +26,9 @@ class priorityQueue {
     }
 
     removeFirst() {
+        if (this.items.length === 0) {
+            return '';
+        }
         return this.items.shift().element;
     }
 }
