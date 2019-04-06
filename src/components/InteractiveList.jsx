@@ -9,8 +9,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
-import DeleteIcon from "@material-ui/icons/Delete";
+//import DeleteIcon from "@material-ui/icons/Delete";
 import SvgIcon from "@material-ui/icons/Delete";
+//import priorityQueue from ''
 
 const styles = theme => ({
   root: {
@@ -21,15 +22,35 @@ const styles = theme => ({
   }
 });
 
-function generate(element) {
-  return [0, 1, 2, 3, 4].map(value =>
-    React.cloneElement(element, {
-      key: value
-    })
-  );
-}
-
 class InteractiveList extends React.Component {
+  generateSongs = () => {
+    console.log(this.props.songs);
+    //return
+
+    return this.props.songs.map(s => (
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar
+            alt="dummyPhoto"
+            src="https://source.unsplash.com/user/erondu/50x50"
+            className={this.props.classes.avatar}
+          />
+        </ListItemAvatar>
+        <ListItemText
+          primary={s.element}
+          secondary="Slayer"
+        />
+        <ListItemSecondaryAction>
+          <IconButton aria-label="Upvote">
+            <SvgIcon>
+              <path d="./../pictures/baseline-thumb_up-24px.svg" />
+            </SvgIcon>
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+    ));
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -38,28 +59,7 @@ class InteractiveList extends React.Component {
         <Grid>
           <div className={classes.demo}>
             <List dense={true}>
-              {generate(
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt="dummyPhoto"
-                      src="https://source.unsplash.com/user/erondu/50x50"
-                      className={classes.avatar}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Raining Blood"
-                    secondary={true ? "Slayer" : null}
-                  />
-                  <ListItemSecondaryAction>
-                    <IconButton aria-label="Upvote">
-                      <SvgIcon>
-                        <path d="./../pictures/baseline-thumb_up-24px.svg" />
-                      </SvgIcon>
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              )}
+              {this.generateSongs()}
             </List>
           </div>
         </Grid>

@@ -11,23 +11,66 @@ import io from 'socket.io-client';
 // const socket = io('192.168.43.86:8000');
 const socket = io('localhost:8000');
 
+// const Queue = require("./PriorityQueue/priorityQueueClient.jsx");
+// var songs = new Queue.constructor([]);
+var songs = [];
+
+let append = (element) => {
+  if (songs.filter(i => i.element === element).length > 0) {
+      boostItem(element);
+  } else{
+      songs.push({element: element, priority: 0});
+  }
+}
+
+let boostItem = (element) => {
+  let index = songs.map(i => i.element).indexOf(element);
+  songs[index].priority += 1;
+
+  while (index !== 0 && songs[index].priority > songs[index - 1].priority) {
+      let tmp = songs[index - 1];
+      songs[index - 1] = songs[index];
+      songs[index] = tmp;
+      index--;
+  }
+}
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log("HVAD");
+  }
+
   componentDidMount() {
     socket.on('connect', () => {
       console.log("Connected:", socket.connected);
+      //console.log("heh", songs);
     });
 
     socket.on('initial setup', (data) => {
-      //this.setState({ dataGot: data })
+      //console.log("Got stuff!", data);
+      //this.setState({ songs: new Queue.constructor(data) })
+      //songs = new Queue.constructor(data);
+      songs = data;
+      //console.log("I now am!", songs)
+      this.forceUpdate();
     });
 
-    socket.on('kage?', (data) => {
-      console.log(data);
-      //this.setState({ dataGot: [ ... this.state.dataGot, data]})
+    socket.on('songAdded', (song) => {
+      //console.log(song);
+      //console.log(songs);
+      //songs.append(song);
+      append(song);
+      this.forceUpdate();
     });
   }
 
+  sendSong = (song) => {
+    socket.emit('addSong', song);
+  }
+
   render() {
+    console.log("kage", songs)
     return (
       <React.Fragment>
         <CssBaseline />
@@ -37,10 +80,14 @@ class App extends Component {
               <MediaControlCard />
             </div>
             <div className="search">
-              <CustomizedInputBase />
+              <CustomizedInputBase
+                songSender = {this.sendSong}
+              />
             </div>
             <div className="queue">
-              <InteractiveList />
+              <InteractiveList
+                songs = {songs}
+              />
             </div>
           </div>
         </Grid>
