@@ -40,7 +40,7 @@ function MediaControlCard(props) {
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h5" variant="h5">
-            Raining Blood
+            {props.songData.name}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             Slayer
@@ -52,8 +52,8 @@ function MediaControlCard(props) {
       </div>
       <CardMedia
         className={classes.cover}
-        image="https://source.unsplash.com/user/erondu/50x50"
-        title="Live from space album cover"
+        image={props.songData.albumArt}
+        title="Album cover"
       />
     </Card>
   );
