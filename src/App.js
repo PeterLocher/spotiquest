@@ -14,12 +14,13 @@ const socket = io('localhost:8000');
 // const Queue = require("./PriorityQueue/priorityQueueClient.jsx");
 // var songs = new Queue.constructor([]);
 var songs = [];
+var lock = false;
 
 let append = (element) => {
   if (songs.filter(i => i.element === element).length > 0) {
-      boostItem(element);
-  } else{
-      songs.push({element: element, priority: 0});
+    boostItem(element);
+  } else {
+    songs.push({ element: element, priority: 0 });
   }
 };
 
@@ -27,15 +28,22 @@ let boostItem = (element) => {
   let index = songs.map(i => i.element).indexOf(element);
   songs[index].priority += 1;
 
-  while (index !== 0 && songs[index].priority > songs[index - 1].priority) {
-      let tmp = songs[index - 1];
-      songs[index - 1] = songs[index];
-      songs[index] = tmp;
-      index--;
+  while (index > (lock ? 1 : 0) && songs[index].priority > songs[index - 1].priority) {
+    let tmp = songs[index - 1];
+    songs[index - 1] = songs[index];
+    songs[index] = tmp;
+    index--;
   }
 };
 
-var currentPlayData = {name: 'Raining Blood', albumArt: 'spotify:album:5v5BfkxWDAKTkzrXl3H0mU', songLenght: 28000};
+let removeFirst = () => {
+  if (songs.length > 0) {
+    songs.shift();
+  };
+  lock = false;
+};
+
+var currentPlayData = { name: 'Raining Blood', artist: 'Slayer', albumArt: 'https://i.scdn.co/image/18c6fef08f5729a6837551fae473d8f52b9eeb1e', songLenght: 28000 };
 
 class App extends Component {
   constructor(props) {
@@ -66,14 +74,33 @@ class App extends Component {
       this.forceUpdate();
     });
 
+    socket.on('songUpvoted', (song) => {
+      if (lock && songs.length > 0 && song === songs[0]) {
+        return
+      }
+
+      boostItem(song);
+      this.forceUpdate();
+    });
+
     socket.on('newSongToPlay', (data) => {
-        currentPlayData = data;
-        this.forceUpdate();
+      currentPlayData = data;
+      removeFirst();
+      this.forceUpdate();
+    });
+
+    socket.on('lockFirstSong', () => {
+      lock = true
+      this.forceUpdate();
     });
   }
 
   sendSong = (song) => {
     socket.emit('addSong', song);
+  }
+
+  upvoteSong = (song) => {
+    socket.emit('upvoteSong', song);
   }
 
   render() {
@@ -85,17 +112,19 @@ class App extends Component {
           <div className="App">
             <div className="playing">
               <MediaControlCard
-                songData = {currentPlayData}
+                songData={currentPlayData}
               />
             </div>
             <div className="search">
               <CustomizedInputBase
-                songSender = {this.sendSong}
+                songSender={this.sendSong}
               />
             </div>
             <div className="queue">
               <InteractiveList
-                songs = {songs}
+                songs={songs}
+                upvote={this.upvoteSong}
+                lock={lock}
               />
             </div>
           </div>
