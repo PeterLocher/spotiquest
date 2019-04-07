@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
-//import SearchIcon from '@material-ui/icons/Search';
-import './CustomizedInputBase.css';
+import React, { Component } from "react";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
+import "./CustomizedInputBase.css";
 
 class CustomizedInputBase extends Component {
   state = {
-    inputValue: ''
+    inputValue: ""
   };
 
-  handleChangeInput = (e) => {
+  handleChangeInput = e => {
     const value = e.currentTarget.value;
     this.setState({ inputValue: value });
   };
@@ -22,13 +22,22 @@ class CustomizedInputBase extends Component {
     }
   };
 
+  enterPressed(event) {
+    const code = event.keyCode || event.which;
+    if (code === 13) {
+      this.addSong()
+    }
+  }
+
   render() {
     return (
       <Paper className="root" elevation={1} square="false">
-        <InputBase className="input"
+        <InputBase
+          className="input"
           placeholder="Search Spotify ..."
           value={this.state.inputValue}
           onChange={this.handleChangeInput}
+          onKeyPress={this.enterPressed.bind(this)}
         />
         <IconButton className="iconButton" aria-label="Add" onClick={this.addSong}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
