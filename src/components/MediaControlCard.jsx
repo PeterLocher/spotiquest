@@ -52,7 +52,7 @@ function MediaControlCard(props) {
       </div>
       <CardMedia
         className={classes.cover}
-        image={props.songData.albmArt}
+        image={props.songData.albumArt}
         title="Album cover"
       />
     </Card>
