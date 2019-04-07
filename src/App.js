@@ -8,8 +8,8 @@ import Grid from "@material-ui/core/CssBaseline";
 import MediaControlCard from "./components/MediaControlCard";
 
 import io from 'socket.io-client';
-// const socket = io('192.168.43.86:8000');
-const socket = io('localhost:8000');
+const socket = io('10.192.157.54:8000');
+//const socket = io('localhost:8000');
 
 // const Queue = require("./PriorityQueue/priorityQueueClient.jsx");
 // var songs = new Queue.constructor([]);
@@ -43,12 +43,13 @@ let removeFirst = () => {
   lock = false;
 };
 
-var currentPlayData = { name: 'Raining Blood', artist: 'Slayer', albumArt: 'https://i.scdn.co/image/18c6fef08f5729a6837551fae473d8f52b9eeb1e', songLenght: 28000 };
+var currentPlayData = { name: 'Raining Blood', artistName: 'Slayer', albumArt: 'https://i.scdn.co/image/18c6fef08f5729a6837551fae473d8f52b9eeb1e', songLenght: 28000 };
+var songTime = 0;
 
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log("HVAD");
+    //console.log("HVAD");
   }
 
   componentDidMount() {
@@ -58,10 +59,11 @@ class App extends Component {
     });
 
     socket.on('initial setup', (data) => {
-      //console.log("Got stuff!", data);
+      console.log("Got stuff!", data);
       //this.setState({ songs: new Queue.constructor(data) })
       //songs = new Queue.constructor(data);
-      songs = data;
+      songs = data.songs;
+      currentPlayData = data.playData;
       //console.log("I now am!", songs)
       this.forceUpdate();
     });
@@ -85,7 +87,14 @@ class App extends Component {
 
     socket.on('newSongToPlay', (data) => {
       currentPlayData = data;
+      songTime = 0;
       removeFirst();
+      this.forceUpdate();
+    });
+
+    socket.on('songIsAt', (time) => {
+      songTime = time;
+      //console.log("GOT time!", time)
       this.forceUpdate();
     });
 
@@ -104,7 +113,7 @@ class App extends Component {
   }
 
   render() {
-    console.log("kage", songs);
+    //console.log("kage", songs);
     return (
       <React.Fragment>
         <CssBaseline />
@@ -113,6 +122,7 @@ class App extends Component {
             <div className="playing">
               <MediaControlCard
                 songData={currentPlayData}
+                songAt={songTime}
               />
             </div>
             <div className="search">

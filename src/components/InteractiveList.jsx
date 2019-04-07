@@ -27,7 +27,7 @@ const styles = theme => ({
 
 class InteractiveList extends React.Component {
   generateSongs = () => {
-    console.log(this.props.songs);
+    //console.log(this.props.songs);
     //return
 
     return this.props.songs.map(s => (
@@ -41,7 +41,7 @@ class InteractiveList extends React.Component {
         </ListItemAvatar> */}
           <ListItemText primary={<Typography noWrap style={{ fontSize: 16 + "px" }}>{s.element}</Typography>} />
           <ListItemSecondaryAction>
-            {this.props.lock && s.element === this.props.songs[0].element ? "" : s.priority + 1}
+            {s.priority === 0 || this.props.lock && s.element === this.props.songs[0].element ? "" : s.priority}
             <IconButton
               aria-label="Upvote"
               onClick={() => this.props.upvote(s.element)}

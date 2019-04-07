@@ -43,11 +43,14 @@ function MediaControlCard(props) {
             {props.songData.name}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            Slayer
+          {props.songData.artistName}
           </Typography>
         </CardContent>
         <div className={classes.controls}>
-          <ProgressBar />
+          <ProgressBar
+            duration = {props.songData.songLength}
+            progrees = {props.songAt}
+          />
         </div>
       </div>
       <CardMedia
