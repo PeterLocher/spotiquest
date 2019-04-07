@@ -21,6 +21,9 @@ class priorityQueue {
     boostItem(element) {
         let index = this.items.map(i => i.element).indexOf(element);
         //console.log("trye!", index);
+        if (index < 0 || index >= this.items.length) {
+            return;
+        }
         this.items[index].priority += 1;
 
         while (index > (this.lock ? 1 : 0) && this.items[index].priority > this.items[index - 1].priority) {

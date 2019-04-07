@@ -11,20 +11,25 @@ const styles = theme => ({
   card: {
     display: 'flex',
     borderRadius: '5px 5px 0px 0px',
+    //width: 100 + '%',
   },
   details: {
     display: 'flex',
     flexDirection: 'column',
+    //width: 70 + "%",
   },
   content: {
     flex: '1 0 auto',
   },
   cover: {
+    //float: 'right',
     width: 151,
+    height: 151,
   },
   controls: {
     display: 'flex',
-    margin: '0px 10px 10px 10px'
+    margin: '0px 10px 10px 10px',
+    //width: 100 + 'px'
   },
   playIcon: {
     height: 38,
